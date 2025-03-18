@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Event Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Admin Dashboard!</h1>
+    <p>You are logged in as an admin.</p>
+    <div class="dashboard-grid">
+      <div class="dashboard-section">
+        <h2>Create New Event</h2>
+        <form id="createEventForm">
+          <label for="eventName">Event Name:</label>
+          <input type="text" id="eventName" name="eventName" required>
+          <label for="eventDate">Event Date:</label>
+          <input type="date" id="eventDate" name="eventDate" required>
+          <label for="eventLocation">Event Location:</label>
+          <input type="text" id="eventLocation" name="eventLocation" required>
+          <button type="submit">Create Event</button>
+        </form>
+      </div>  
+      <div class="dashboard-section">
+        <h2>All Events</h2>
+        <ul id="allEvents"></ul>
+      </div>
+      <div class="dashboard-section">
+        <h2>Delete an Event</h2>
+        <form id="deleteEventForm">
+          <label for="deleteEventName">Event Name:</label>
+          <input type="text" id="deleteEventName" name="deleteEventName" required>
+          <button type="submit">Delete Event</button>
+        </form>
+      </div>
+
+      
+      <div class="dashboard-section">
+        <h2>All Users</h2>
+        <ul id="allUsers"></ul>
+      </div>
+
+      
+      <div class="dashboard-section">
+        <h2>Event Payments</h2>
+        <ul id="eventPayments"></ul>
+      </div>
+    </div>
+
+    
+    <button onclick="logout()">Logout</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

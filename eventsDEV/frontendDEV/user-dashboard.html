@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard - Event Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the User Dashboard!</h1>
+    <p>You are logged in as a user.</p>
+
+    <div class="dashboard-grid">
+      
+      <div class="dashboard-section">
+        <h2>Upcoming Events</h2>
+        <ul id="upcomingEvents"></ul>
+      </div>
+
+      
+      <div class="dashboard-section">
+        <h2>Register for an Event</h2>
+        <form id="registerEventForm">
+          <label for="eventName">Event Name:</label>
+          <input type="text" id="eventName" name="eventName" required>
+          <button type="submit">Register</button>
+        </form>
+      </div>
+
+      
+      <div class="dashboard-section">
+        <h2>Your Registered Events</h2>
+        <ul id="registeredEvents"></ul>
+      </div>
+    </div>
+
+    
+    <button onclick="window.location.href='user-profile.html'">Edit Profile</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
