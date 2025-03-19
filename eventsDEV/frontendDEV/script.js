@@ -1,5 +1,5 @@
 // Base URL for backend API
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "http://localhost:5000";
 
 // Helper function to make API calls
 async function fetchData(url, options = {}) {
@@ -31,15 +31,29 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
   const password = document.getElementById("password").value;
 
   try {
-    const data = await fetchData(`${API_BASE_URL}/auth/login`, {
+    const response = await fetch(`${API_BASE_URL}/login`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ username, password }),
     });
 
-    localStorage.setItem("access_token", data.access_token);
-    window.location.href = data.role === "admin" ? "admin-dashboard.html" : "user-dashboard.html";
+    const data = await response.json();
+
+    if (response.ok) {
+      // Store the access token if login is successful
+      localStorage.setItem("access_token", data.access_token);
+      
+      // Redirect based on whether the user is ADMIN
+      window.location.href = username === "ADMIN" ? "admin-dashboard.html" : "user-dashboard.html";
+    } else {
+      // Handle errors based on the response message
+      alert(data.message);
+    }
   } catch (err) {
     console.error(err);
+    alert("An error occurred during login. Please try again.");
   }
 });
 
@@ -51,13 +65,12 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
   const password = document.getElementById("password").value;
 
   try {
-    const data = await fetchData(`${API_BASE_URL}/auth/register`, {
+    const data = await fetchData(`${API_BASE_URL}/register`, {
       method: "POST",
       body: JSON.stringify({ username, email, password }),
     });
-
     alert(data.message);
-    window.location.href = "authentication.html";
+    window.location.href = "authentification.html";
   } catch (err) {
     console.error(err);
   }
@@ -69,13 +82,13 @@ document.getElementById("forgotPasswordForm")?.addEventListener("submit", async 
   const email = document.getElementById("email").value;
 
   try {
-    const data = await fetchData(`${API_BASE_URL}/auth/forgot-password`, {
+    const data = await fetchData(`${API_BASE_URL}/forgot-password`, {
       method: "POST",
       body: JSON.stringify({ email }),
     });
 
     alert(data.message);
-    window.location.href = "authentication.html";
+    window.location.href = "authentification.html";
   } catch (err) {
     console.error(err);
   }
@@ -84,7 +97,7 @@ document.getElementById("forgotPasswordForm")?.addEventListener("submit", async 
 // Logout Function
 function logout() {
   localStorage.removeItem("access_token");
-  window.location.href = "authentication.html";
+  window.location.href = "authentification.html";
 }
 
 // Display Upcoming Events (User Dashboard)
@@ -248,3 +261,19 @@ if (window.location.pathname.includes("admin-dashboard.html")) {
   displayAllEvents();
   displayAllUsers();
 }
+
+// the events display routes :
+document.addEventListener("DOMContentLoaded", function() {
+  fetch('/get_users')
+      .then(response => response.json())
+      .then(data => {
+          const userList = document.getElementById('allUsers');
+          userList.innerHTML = '';
+          data.forEach(user => {
+              const li = document.createElement('li');
+              li.textContent = user.username; // Adjust as needed
+              userList.appendChild(li);
+          });
+      })
+      .catch(error => console.error('Error fetching users:', error));
+});

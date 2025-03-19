@@ -5,15 +5,13 @@ from ..databaseDEV.db_configure import db
 
 events_bp = Blueprint("events", __name__)
 
-
-@events_bp.route("/", methods=["POST"])
-@jwt_required()
+@events_bp.route("/create_event", methods=["POST"])
+@jwt_required
 def create_event():
     data = request.get_json()
     name = data.get("name")
     date = data.get("date")
     location = data.get("location")
-
     event = Event(name=name, date=date, location=location)
     db.session.add(event)
     db.session.commit()

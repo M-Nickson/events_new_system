@@ -1,5 +1,5 @@
 import os
 class Config:
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI", "postgresql://username:password@localhost:5432/event_management")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI", "postgresql://postgres:A21092004.@localhost:5432/event_management")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-secret-key")
